@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: b61348b2cedd92542b7ef2754fa3d198
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Eastman Roman
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 70df6f47502719141b5bef59974fefd7, type: 3}
+  - {fileID: 12800000, guid: a5c4b6b5b02a78f499fcc8b2a61d84a7, type: 3}
+  - {fileID: 12800000, guid: 32a45964e5ea09146a6b64668617a928, type: 3}
+  - {fileID: 12800000, guid: 7517b88a5f5f60a46badc01ce4a77adf, type: 3}
+  - {fileID: 12800000, guid: 25a7d5e5bc803dc45ad4236d9adc0fb4, type: 3}
+  - {fileID: 12800000, guid: 26d1464f35956d045a255c337091acbd, type: 3}
+  - {fileID: 12800000, guid: 94788f9ce28d9044284e7438efca8e43, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
