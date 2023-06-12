@@ -11,18 +11,22 @@ public class VideoManager : MonoBehaviour
 
     [SerializeField]
     private RenderTexture _renderTexture = null;
+
     [SerializeField]
-    private VideoClip _videoClip = null;
+    private VideoClip[] _videos = null;
+    public int videoIndex = 0;
 
     float currentPlayBackSpeed = 0.5f;
     float currentPathFollowerSpeed = 5;
-    float targetPlayBackSpeed = 0.5f;
-    float targetPathFollowerSpeed = 5;
+    public float targetPlayBackSpeed = 0.5f;
+    public float targetPathFollowerSpeed = 5;
 
     public float lerpSpeed = 1f;
 
     float timer = 0f;
     public float speedUpDuration = 2f;
+
+    public Transform endWayPoint;
 
 
     bool changeSpeed = false;
@@ -100,6 +104,7 @@ public class VideoManager : MonoBehaviour
         };
 
 
+
         videoPlayer.playOnAwake = false;
         audioSource.playOnAwake = false;
 
@@ -111,12 +116,17 @@ public class VideoManager : MonoBehaviour
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.EnableAudioTrack(0, true);
         videoPlayer.SetTargetAudioSource(0, audioSource);
-        videoPlayer.clip = _videoClip;
+        videoPlayer.clip = _videos[videoIndex];
         videoPlayer.Prepare();
+
+        Debug.Log("video lenght : " +videoPlayer.clip.length);
+
+        endWayPoint.position = new Vector3( (float)videoPlayer.clip.length * 10f , 0f , 0f );
 
         while (!videoPlayer.isPrepared)
             yield return null;
 
+        PathFollower.Instance.enabled = true;
         videoPlayer.targetTexture = _renderTexture;
         videoPlayer.Play();
 
@@ -124,6 +134,22 @@ public class VideoManager : MonoBehaviour
 
         while (videoPlayer.isPlaying)
             yield return null;
+
+        Debug.Log("video ended");
+
+        videoIndex++;
+
+        PathFollower.Instance.enabled = false;
+
+        if ( videoIndex == _videos.Length)
+        {
+
+        }
+        else
+        {
+            StartCoroutine(Start());
+        }
+
     }
 
 }

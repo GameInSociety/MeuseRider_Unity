@@ -14,6 +14,8 @@ namespace PathCreation.Examples
         public float speed = 5;
         float distanceTravelled;
 
+        public bool enabled = false;
+
         private void Awake()
         {
             Instance = this;
@@ -24,12 +26,13 @@ namespace PathCreation.Examples
             {
                 // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
                 pathCreator.pathUpdated += OnPathChanged;
+
             }
         }
 
         void Update()
         {
-            if (pathCreator != null)
+            if (pathCreator != null && enabled)
             {
                 distanceTravelled += speed * Time.deltaTime;
                 transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);

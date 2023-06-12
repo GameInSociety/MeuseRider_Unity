@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 5e25a9fa7c5b69e4393d908490f48177, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3.85
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.135
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1661564064}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0.135}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -938,7 +938,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 0
   m_SkipOnDrop: 0
-  m_Looping: 1
+  m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -970,9 +970,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderTexture: {fileID: 8400000, guid: dc3ea4718b3db12429bb213d0969a149, type: 2}
-  _videoClip: {fileID: 32900000, guid: 6c6c497765b1d5542857b51c2f0516d7, type: 3}
-  lerpSpeed: 1
+  _videos:
+  - {fileID: 32900000, guid: 7edd59c8f9583f044aa7ce5d6bd1f01e, type: 3}
+  - {fileID: 32900000, guid: 7bb6b8a5d88264d4d83ad728fc8727b8, type: 3}
+  - {fileID: 32900000, guid: 7b83df418e857db4a98fe396250ec66c, type: 3}
+  videoIndex: 0
+  targetPlayBackSpeed: 0.5
+  targetPathFollowerSpeed: 5
+  lerpSpeed: 7.78
   speedUpDuration: 2
+  endWayPoint: {fileID: 680127147}
 --- !u!82 &265726625
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1564,12 +1571,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 460fd0b9f5d1420418fed9c53cd6bd8f,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: -643.0276
+      value: 643.0276
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 460fd0b9f5d1420418fed9c53cd6bd8f,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 643.02765
+      value: -643.0276
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 460fd0b9f5d1420418fed9c53cd6bd8f,
         type: 3}
@@ -1639,7 +1646,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 460fd0b9f5d1420418fed9c53cd6bd8f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 460fd0b9f5d1420418fed9c53cd6bd8f, type: 3}
@@ -1936,6 +1943,7 @@ GameObject:
   - component: {fileID: 806563405}
   - component: {fileID: 806563404}
   - component: {fileID: 806563403}
+  - component: {fileID: 806563407}
   m_Layer: 0
   m_Name: Canvas (Speed)
   m_TagString: Untagged
@@ -2047,6 +2055,39 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!328 &806563407
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806563401}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 32f43c3501806b94696ab47092a493b7, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
+  m_Url: 
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &820919567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,6 +2668,7 @@ MonoBehaviour:
   pathCreator: {fileID: 1598576514}
   endOfPathInstruction: 0
   speed: 0
+  enabled: 0
 --- !u!1001 &1138319950
 PrefabInstance:
   m_ObjectHideFlags: 0
