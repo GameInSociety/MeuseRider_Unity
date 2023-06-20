@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using PathCreation.Examples;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,16 @@ public class VideoManager : MonoBehaviour
     [SerializeField]
     private RenderTexture _renderTexture = null;
 
-    [SerializeField]
-    private VideoClip[] _videos = null;
-    public int videoIndex = 0;
+    public Level[] levels;
+    [System.Serializable]
+    public class Level
+    {
+        public string name;
+        public VideoClip clip;
+        public GameObject ld_Obj;
+    }
+
+    public int levelIndex = 0;
 
     float currentPlayBackSpeed = 0.5f;
     float currentPathFollowerSpeed = 5;
@@ -116,7 +124,18 @@ public class VideoManager : MonoBehaviour
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.EnableAudioTrack(0, true);
         videoPlayer.SetTargetAudioSource(0, audioSource);
-        videoPlayer.clip = _videos[videoIndex];
+
+        // load level
+        foreach (var item in levels)
+        {
+            if (item.ld_Obj == null)
+                continue;
+
+            item.ld_Obj.SetActive(false);
+        }
+
+        videoPlayer.clip = levels[levelIndex].clip;
+        levels[levelIndex].ld_Obj.SetActive(true);
         videoPlayer.Prepare();
 
         Debug.Log("video lenght : " +videoPlayer.clip.length);
@@ -137,11 +156,11 @@ public class VideoManager : MonoBehaviour
 
         Debug.Log("video ended");
 
-        videoIndex++;
+        levelIndex++;
 
         PathFollower.Instance.enabled = false;
 
-        if ( videoIndex == _videos.Length)
+        if ( levelIndex == levels.Length)
         {
 
         }

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 5e25a9fa7c5b69e4393d908490f48177, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3.85
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.135
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1661564064}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0.135}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1753,9 +1753,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderTexture: {fileID: 8400000, guid: dc3ea4718b3db12429bb213d0969a149, type: 2}
-  _videos:
-  - {fileID: 32900000, guid: 01aa1732e129ba041ba34f7c05437941, type: 3}
-  videoIndex: 0
+  levels:
+  - name: Meuse
+    clip: {fileID: 32900000, guid: 7b83df418e857db4a98fe396250ec66c, type: 3}
+    ld_Obj: {fileID: 2031760363}
+  - name: Gilles de treves
+    clip: {fileID: 32900000, guid: 7edd59c8f9583f044aa7ce5d6bd1f01e, type: 3}
+    ld_Obj: {fileID: 672522447}
+  - name: Mirabelliers
+    clip: {fileID: 32900000, guid: 7bb6b8a5d88264d4d83ad728fc8727b8, type: 3}
+    ld_Obj: {fileID: 1862428626}
+  - name: Douamont
+    clip: {fileID: 0}
+    ld_Obj: {fileID: 1393992738}
+  - name: "Montm\xE9dy"
+    clip: {fileID: 0}
+    ld_Obj: {fileID: 784124367}
+  levelIndex: 0
   targetPlayBackSpeed: 2
   targetPathFollowerSpeed: 5
   lerpSpeed: 7.78
@@ -3618,6 +3632,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b7e5c51071b5b3945bde31053eaa7c68, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 460fd0b9f5d1420418fed9c53cd6bd8f,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4711208715938537054, guid: 06d987623bef1134a88137cafce1a8c9,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 460fd0b9f5d1420418fed9c53cd6bd8f,
         type: 3}
       propertyPath: m_Name
