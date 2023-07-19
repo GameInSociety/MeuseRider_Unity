@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class VideoManager : MonoBehaviour
@@ -13,12 +14,13 @@ public class VideoManager : MonoBehaviour
     [SerializeField]
     private RenderTexture _renderTexture = null;
 
+    public Text uiText_Debug;
+
     public Level[] levels;
     [System.Serializable]
     public class Level
     {
         public string name;
-        public VideoClip clip;
         public GameObject ld_Obj;
     }
 
@@ -43,6 +45,7 @@ public class VideoManager : MonoBehaviour
     {
         Instance= this;
     }
+
 
     private void Update()
     {
@@ -100,18 +103,18 @@ public class VideoManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        Debug.Log(Application.persistentDataPath);
+
         Application.runInBackground = true;
 
         var videoPlayer = GetComponent<VideoPlayer>();
         var audioSource = GetComponent<AudioSource>();
 
-
         videoPlayer.errorReceived += delegate (VideoPlayer videoPlayer, string message)
         {
+            uiText_Debug.text = message;
             Debug.LogWarning("[VideoPlayer] Play Movie Error: " + message);
         };
-
-
 
         videoPlayer.playOnAwake = false;
         audioSource.playOnAwake = false;
@@ -134,16 +137,19 @@ public class VideoManager : MonoBehaviour
             item.ld_Obj.SetActive(false);
         }
 
-        videoPlayer.clip = levels[levelIndex].clip;
+        string url = Application.persistentDataPath + "/" + levels[levelIndex].name + ".mp4";
+        videoPlayer.url = url;
+
         levels[levelIndex].ld_Obj.SetActive(true);
         videoPlayer.Prepare();
 
-        Debug.Log("video lenght : " +videoPlayer.clip.length);
-
-        endWayPoint.position = new Vector3( (float)videoPlayer.clip.length * 10f , 0f , 0f );
+        
 
         while (!videoPlayer.isPrepared)
             yield return null;
+
+        Debug.Log("video lenght : " + videoPlayer.clip.length);
+        endWayPoint.position = new Vector3((float)videoPlayer.clip.length * 10f, 0f, 0f);
 
         PathFollower.Instance.enabled = true;
         videoPlayer.targetTexture = _renderTexture;
