@@ -12,9 +12,9 @@ namespace PathCreation.Examples
         public PathCreator pathCreator;
         public EndOfPathInstruction endOfPathInstruction;
         public float speed = 5;
-        float distanceTravelled;
+        public float distanceTravelled;
 
-        public bool enabled = false;
+        public bool move = false;
 
         private void Awake()
         {
@@ -28,14 +28,28 @@ namespace PathCreation.Examples
                 pathCreator.pathUpdated += OnPathChanged;
 
             }
+
+
+        }
+
+
+        public void StartMovement()
+        {
+            move = true;
+            distanceTravelled = 0f;
+        }
+
+        public void UpdateMovement()
+        {
+            transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
         }
 
         void Update()
         {
-            if (pathCreator != null && enabled)
+            if (pathCreator != null && move )
             {
                 distanceTravelled += speed * Time.deltaTime;
-                transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
+                UpdateMovement();
                 //transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
             }
         }

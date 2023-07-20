@@ -38,8 +38,9 @@ public class VideoManager : MonoBehaviour
 
     public Transform endWayPoint;
 
-
     bool changeSpeed = false;
+
+    public bool playingVideo = false;
 
     private void Awake()
     {
@@ -49,10 +50,18 @@ public class VideoManager : MonoBehaviour
 
     private void Update()
     {
-        if ( changeSpeed)
+        if (playingVideo)
+        {
+            UpdateVideo();
+        }
+    }
+
+    void UpdateVideo()
+    {
+        if (changeSpeed)
         {
             timer += Time.deltaTime;
-            if ( timer > speedUpDuration)
+            if (timer > speedUpDuration)
             {
                 Speed_Normal();
                 changeSpeed = false;
@@ -103,6 +112,8 @@ public class VideoManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        TransitionManager.Instance.image.color = Color.black;
+
         Debug.Log(Application.persistentDataPath);
 
         Application.runInBackground = true;
@@ -143,37 +154,56 @@ public class VideoManager : MonoBehaviour
         levels[levelIndex].ld_Obj.SetActive(true);
         videoPlayer.Prepare();
 
-        
-
         while (!videoPlayer.isPrepared)
             yield return null;
 
-        Debug.Log("video lenght : " + videoPlayer.clip.length);
-        endWayPoint.position = new Vector3((float)videoPlayer.clip.length * 10f, 0f, 0f);
-
-        PathFollower.Instance.enabled = true;
-        videoPlayer.targetTexture = _renderTexture;
         videoPlayer.Play();
+        videoPlayer.Pause();
+        videoPlayer.time = 0f;
+        videoPlayer.playbackSpeed = 0f;
+        videoPlayer.targetTexture = _renderTexture;
 
+        yield return new WaitForSeconds(TransitionManager.Instance.dur);
+
+        playingVideo = true;
+        endWayPoint.position = new Vector3((float)videoPlayer.length * 10f, 0f, 0f);
+        Debug.Log("video lenght : " + videoPlayer.length);
+
+        PathFollower.Instance.UpdateMovement();
+
+        TransitionManager.Instance.FadeOut();
+        yield return new WaitForSeconds(TransitionManager.Instance.dur);
+
+        PathFollower.Instance.StartMovement();
+
+        videoPlayer.Play();
         audioSource.Play();
 
         while (videoPlayer.isPlaying)
             yield return null;
 
-        Debug.Log("video ended");
+        Debug.Log("[VIDEO ENDED]");
 
+        playingVideo = false;
         levelIndex++;
 
-        PathFollower.Instance.enabled = false;
+        PathFollower.Instance.move = false;
 
-        if ( levelIndex == levels.Length)
+
+        TransitionManager.Instance.FadeIn();
+
+        yield return new WaitForSeconds(TransitionManager.Instance.dur);
+
+        if (levelIndex == levels.Length)
         {
-    
+
         }
         else
         {
             StartCoroutine(Start());
         }
+
+
 
     }
 
