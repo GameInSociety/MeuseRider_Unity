@@ -111,6 +111,9 @@ public class VideoManager : MonoBehaviour
 
     public void Stop()
     {
+        currentPathFollowerSpeed = 0f;
+        currentPlayBackSpeed = 0f;
+
         targetPathFollowerSpeed = 0f;
         targetPlayBackSpeed = 0f;
     }
@@ -162,6 +165,8 @@ public class VideoManager : MonoBehaviour
         while (!videoPlayer.isPrepared)
             yield return null;
 
+        Stop();
+
         videoPlayer.Play();
         videoPlayer.Pause();
         videoPlayer.time = 0f;
@@ -178,6 +183,8 @@ public class VideoManager : MonoBehaviour
 
         TransitionManager.Instance.FadeOut();
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
+
+        Speed_Normal();
 
         PathFollower.Instance.StartMovement();
 
