@@ -29,7 +29,13 @@ public class VideoManager : MonoBehaviour
     float currentPlayBackSpeed = 0.5f;
     float currentPathFollowerSpeed = 5;
     public float targetPlayBackSpeed = 0.5f;
-    public float targetPathFollowerSpeed = 5;
+    public float targetPathFollowerSpeed = 5f;
+
+    public float defaultPlayBackSpeed = 1f;
+    public float defaultFollowerSpeed = 5f;
+
+    public float BOOST_MULT = 1.5f;
+    public float SLOW_MULT = 0.5f;
 
     public float lerpSpeed = 1f;
 
@@ -46,7 +52,6 @@ public class VideoManager : MonoBehaviour
     {
         Instance= this;
     }
-
 
     private void Update()
     {
@@ -78,8 +83,8 @@ public class VideoManager : MonoBehaviour
 
     public void Speed_Up()
     {
-        targetPathFollowerSpeed = 15f;
-        targetPlayBackSpeed = 1.5f;
+        targetPathFollowerSpeed = defaultFollowerSpeed * BOOST_MULT;
+        targetPlayBackSpeed = defaultPlayBackSpeed * BOOST_MULT;
 
         DisplayFeedback.Instance.Display("Boost", true);
 
@@ -89,14 +94,14 @@ public class VideoManager : MonoBehaviour
 
     public void Speed_Normal()
     {
-        targetPathFollowerSpeed = 5;
-        targetPlayBackSpeed = 0.5f;
+        targetPathFollowerSpeed = defaultFollowerSpeed;
+        targetPlayBackSpeed = defaultPlayBackSpeed;
     }
 
     public void Speed_Down()
     {
-        targetPathFollowerSpeed = 2f;
-        targetPlayBackSpeed = 0.2f;
+        targetPathFollowerSpeed = defaultFollowerSpeed * SLOW_MULT;
+        targetPlayBackSpeed = defaultPlayBackSpeed * SLOW_MULT;
 
         DisplayFeedback.Instance.Display("Miss", false);
 
