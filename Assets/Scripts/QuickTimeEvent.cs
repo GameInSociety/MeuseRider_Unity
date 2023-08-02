@@ -11,6 +11,9 @@ public class QuickTimeEvent : MonoBehaviour
 
     public bool booster = false;
 
+    public AudioClip boost_clip;
+    public AudioClip score_clip;
+
     Rigidbody rb;
 
     public float initScale = 1f;
@@ -37,6 +40,8 @@ public class QuickTimeEvent : MonoBehaviour
             {
                 VideoManager.Instance.Speed_Up();
                 transform.DOScale(0f, .5f).SetEase(Ease.OutBounce);
+                
+                SoundManager.Instance.Play(SoundManager.Type.FX, boost_clip);
             }
             else
             {
@@ -45,6 +50,8 @@ public class QuickTimeEvent : MonoBehaviour
                 transform.DOScale(initScale, .2f).SetEase(Ease.OutBounce);
                 transform.DOLocalMove(new Vector3(-0.0352f, 0.0055f, 0.0349f), 0.2f);
                 transform.DOLocalRotate(new Vector3(0, -98f, 70.507f), 0.2f);
+
+                SoundManager.Instance.Play(SoundManager.Type.FX, score_clip);
             }
 
 

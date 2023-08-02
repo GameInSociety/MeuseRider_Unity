@@ -154,6 +154,8 @@ MonoBehaviour:
   body: {fileID: 2336656968344765474}
   trigger: {fileID: 1840672046}
   booster: 0
+  boost_clip: {fileID: 8300000, guid: 34bf41940fc46f143b6026725c7c1d5c, type: 3}
+  score_clip: {fileID: 8300000, guid: c4bc95943b7307c44ac38aefa6c080df, type: 3}
   initScale: 1
 --- !u!95 &2484946388519925719
 Animator:

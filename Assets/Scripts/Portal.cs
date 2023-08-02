@@ -12,6 +12,8 @@ public class Portal : VR_Button
 
     public TextMeshProUGUI uiText;
 
+    public AudioClip audioClip;
+
     private void Awake()
     {
         Instance = this;
@@ -30,6 +32,8 @@ public class Portal : VR_Button
     public override void Trigger()
     {
         base.Trigger();
+
+        SoundManager.Instance.Play(SoundManager.Type.FX, audioClip);
 
         gameObject.SetActive(false);
         VideoManager.Instance.NextVideo();

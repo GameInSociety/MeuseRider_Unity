@@ -2306,14 +2306,16 @@ MonoBehaviour:
     ld_Obj: {fileID: 1006073187}
     ambiance_clip: {fileID: 8300000, guid: 7de9dba55e7a00d4a84218369fd30a4f, type: 3}
     voice_clip: {fileID: 8300000, guid: 9ece2cac7c1cf6546b8e6e50e19eb10c, type: 3}
+  debug_enablePortals: 0
   levelIndex: 0
-  targetPlayBackSpeed: 0.5
-  targetPathFollowerSpeed: 5
+  targetPlayBackSpeed: 1
+  targetPathFollowerSpeed: 1
   defaultPlayBackSpeed: 1
-  defaultFollowerSpeed: 4
+  defaultFollowerSpeed: 10
   BOOST_MULT: 1.35
   SLOW_MULT: 1
   lerpSpeed: 7.78
+  video_timer: 0
   speedUpDuration: 2
   endWayPoint: {fileID: 680127147}
   playingVideo: 0
@@ -8096,7 +8098,7 @@ PrefabInstance:
     - target: {fileID: 5111430398011442181, guid: 93cd785759f3b4646a39eef3bf320a0f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111430398011442181, guid: 93cd785759f3b4646a39eef3bf320a0f,
         type: 3}
@@ -10769,7 +10771,7 @@ PrefabInstance:
     - target: {fileID: 5111430398011442181, guid: 4ca1addcefe80c84ab06fc92a94fc4da,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5111430398011442181, guid: 4ca1addcefe80c84ab06fc92a94fc4da,
         type: 3}
@@ -11833,7 +11835,7 @@ PrefabInstance:
     - target: {fileID: 5111430398011442181, guid: 93cd785759f3b4646a39eef3bf320a0f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5111430398011442181, guid: 93cd785759f3b4646a39eef3bf320a0f,
         type: 3}
@@ -12986,6 +12988,7 @@ MonoBehaviour:
   scaleDur: 0.2
   levelIndex: 0
   uiText: {fileID: 726318816}
+  audioClip: {fileID: 8300000, guid: 9047302a752f09a4d86fd7c4b6c47660, type: 3}
 --- !u!1 &1887255631
 GameObject:
   m_ObjectHideFlags: 0

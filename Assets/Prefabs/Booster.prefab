@@ -122,6 +122,8 @@ MonoBehaviour:
   body: {fileID: 7151265181016772150}
   trigger: {fileID: 1840672046}
   booster: 1
+  boost_clip: {fileID: 8300000, guid: 34bf41940fc46f143b6026725c7c1d5c, type: 3}
+  score_clip: {fileID: 8300000, guid: c4bc95943b7307c44ac38aefa6c080df, type: 3}
   initScale: 1
 --- !u!54 &2142197896369008769
 Rigidbody:

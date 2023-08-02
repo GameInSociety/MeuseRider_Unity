@@ -44,8 +44,12 @@ public class VideoManager : MonoBehaviour
     public float lerpSpeed = 1f;
 
 
-    float timer = 0f;
+    float boost_Timer = 0f;
+    public float video_timer = 0f;
+    
     public float speedUpDuration = 2f;
+
+
 
     public Transform endWayPoint;
 
@@ -80,13 +84,15 @@ public class VideoManager : MonoBehaviour
     {
         if (changeSpeed)
         {
-            timer += Time.deltaTime;
-            if (timer > speedUpDuration)
+            boost_Timer += Time.deltaTime;
+            if (boost_Timer > speedUpDuration)
             {
                 Speed_Normal();
                 changeSpeed = false;
             }
         }
+
+        video_timer += Time.deltaTime;
 
         currentPlayBackSpeed = Mathf.Lerp(currentPlayBackSpeed, targetPlayBackSpeed, lerpSpeed * Time.deltaTime);
         currentPathFollowerSpeed = Mathf.Lerp(currentPathFollowerSpeed, targetPathFollowerSpeed, lerpSpeed * Time.deltaTime);
@@ -104,7 +110,7 @@ public class VideoManager : MonoBehaviour
         DisplayFeedback.Instance.Display("Boost", true);
 
         changeSpeed = true;
-        timer = 0f;
+        boost_Timer = 0f;
     }
 
     public void Speed_Normal()
@@ -121,7 +127,7 @@ public class VideoManager : MonoBehaviour
         DisplayFeedback.Instance.Display("Miss", false);
 
         changeSpeed = true;
-        timer = 0f;
+        boost_Timer = 0f;
     }
 
     public void Stop()
@@ -193,7 +199,7 @@ public class VideoManager : MonoBehaviour
 
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
-        playingVideo = true;
+        
         endWayPoint.position = new Vector3((float)videoPlayer.length * defaultFollowerSpeed, 0f, 0f);
 
         Portal.Instance.gameObject.SetActive(true);
@@ -208,7 +214,8 @@ public class VideoManager : MonoBehaviour
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
         Speed_Normal();
-
+        video_timer = 0f;
+        playingVideo = true;
         PathFollower.Instance.StartMovement();
 
         videoPlayer.Play();
@@ -225,8 +232,7 @@ public class VideoManager : MonoBehaviour
 
         if (!debug_enablePortals)
         {
-            Portal.Instance.gameObject.SetActive(false);
-            NextVideo();
+            Portal.Instance.Trigger();
         }
 
 
