@@ -9,32 +9,26 @@ public class VR_Button : MonoBehaviour
     public Renderer rend;
     public Color emissionColor;
 
+    public float scaleAmount = 1.2f;
+    public float scaleDur = 0.2f;
+
     bool inside = false;
 
-
-
-    private void Update()
+    public virtual void Update()
     {
         if (inside)
         {
-            var leftHandDevices = new List<UnityEngine.XR.InputDevice>();
-            UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.LeftHand, leftHandDevices);
-
-            if (leftHandDevices.Count == 1)
+            if (InteractionManager.Instance.PressAny())
             {
-                UnityEngine.XR.InputDevice device = leftHandDevices[0];
-                bool triggerValue;
-                if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
-                {
-                    Debug.Log("Trigger button is pressed.");
-                    SceneManager.LoadScene("Main_Scene");
-                }
-            }
-            else if (leftHandDevices.Count > 1)
-            {
-                Debug.Log("Found more than one left hand!");
+                Trigger();
+                //SceneManager.LoadScene("Main_Scene");
             }
         }
+
+    }
+
+    public virtual void Trigger()
+    {
 
     }
 

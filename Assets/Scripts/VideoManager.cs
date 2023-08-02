@@ -22,6 +22,8 @@ public class VideoManager : MonoBehaviour
     {
         public string name;
         public GameObject ld_Obj;
+        public AudioClip ambiance_clip;
+        public AudioClip voice_clip;
     }
 
     public int levelIndex = 0;
@@ -39,6 +41,7 @@ public class VideoManager : MonoBehaviour
 
     public float lerpSpeed = 1f;
 
+
     float timer = 0f;
     public float speedUpDuration = 2f;
 
@@ -51,6 +54,16 @@ public class VideoManager : MonoBehaviour
     private void Awake()
     {
         Instance= this;
+    }
+
+    private void Start()
+    {
+        LoadVideo();
+    }
+
+    public void LoadVideo()
+    {
+        StartCoroutine(LoadVideoCoroutine());
     }
 
     private void Update()
@@ -118,7 +131,7 @@ public class VideoManager : MonoBehaviour
         targetPlayBackSpeed = 0f;
     }
 
-    private IEnumerator Start()
+    private IEnumerator LoadVideoCoroutine()
     {
         TransitionManager.Instance.image.color = Color.black;
 
@@ -167,6 +180,9 @@ public class VideoManager : MonoBehaviour
 
         Stop();
 
+        SoundManager.Instance.Play(SoundManager.Type.Ambiant, levels[levelIndex].ambiance_clip);
+        SoundManager.Instance.Play(SoundManager.Type.Voice, levels[levelIndex].voice_clip);
+
         videoPlayer.Play();
         videoPlayer.Pause();
         videoPlayer.time = 0f;
@@ -176,7 +192,10 @@ public class VideoManager : MonoBehaviour
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
         playingVideo = true;
-        endWayPoint.position = new Vector3((float)videoPlayer.length * 10f, 0f, 0f);
+        endWayPoint.position = new Vector3((float)videoPlayer.length * defaultFollowerSpeed, 0f, 0f);
+        Portal.Instance.gameObject.SetActive(true);
+        Portal.Instance.transform.position = endWayPoint.position + new Vector3(0.8f, 0.75f, 0f);
+        Portal.Instance.SetText(levels[levelIndex + 1].name);
         Debug.Log("video lenght : " + videoPlayer.length);
 
         PathFollower.Instance.UpdateMovement();
@@ -197,26 +216,29 @@ public class VideoManager : MonoBehaviour
         Debug.Log("[VIDEO ENDED]");
 
         playingVideo = false;
-        levelIndex++;
+
 
         PathFollower.Instance.move = false;
 
+
+    }
+
+    public void NextVideo()
+    {
+        StartCoroutine(NextVideoCoroutine());
+    }
+
+    IEnumerator NextVideoCoroutine()
+    {
+        Debug.Log("next video");
+
+        levelIndex++;
 
         TransitionManager.Instance.FadeIn();
 
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
-        if (levelIndex == levels.Length)
-        {
-
-        }
-        else
-        {
-            StartCoroutine(Start());
-        }
-
-
-
+        LoadVideo();
     }
 
 }
