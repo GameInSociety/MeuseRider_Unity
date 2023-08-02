@@ -26,6 +26,8 @@ public class VideoManager : MonoBehaviour
         public AudioClip voice_clip;
     }
 
+    public bool debug_enablePortals;
+
     public int levelIndex = 0;
 
     float currentPlayBackSpeed = 0.5f;
@@ -193,9 +195,11 @@ public class VideoManager : MonoBehaviour
 
         playingVideo = true;
         endWayPoint.position = new Vector3((float)videoPlayer.length * defaultFollowerSpeed, 0f, 0f);
+
         Portal.Instance.gameObject.SetActive(true);
         Portal.Instance.transform.position = endWayPoint.position + new Vector3(0.8f, 0.75f, 0f);
         Portal.Instance.SetText(levels[levelIndex + 1].name);
+
         Debug.Log("video lenght : " + videoPlayer.length);
 
         PathFollower.Instance.UpdateMovement();
@@ -217,8 +221,13 @@ public class VideoManager : MonoBehaviour
 
         playingVideo = false;
 
-
         PathFollower.Instance.move = false;
+
+        if (!debug_enablePortals)
+        {
+            Portal.Instance.gameObject.SetActive(false);
+            NextVideo();
+        }
 
 
     }
