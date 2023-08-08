@@ -189,7 +189,6 @@ public class VideoManager : MonoBehaviour
         Stop();
 
         SoundManager.Instance.Play(SoundManager.Type.Ambiant, levels[levelIndex].ambiance_clip);
-        SoundManager.Instance.Play(SoundManager.Type.Voice, levels[levelIndex].voice_clip);
 
         videoPlayer.Play();
         videoPlayer.Pause();
@@ -220,6 +219,10 @@ public class VideoManager : MonoBehaviour
 
         videoPlayer.Play();
         audioSource.Play();
+
+        yield return new WaitForSeconds(2f);
+
+        SoundManager.Instance.Play(SoundManager.Type.Voice, levels[levelIndex].voice_clip);
 
         while (videoPlayer.isPlaying)
             yield return null;

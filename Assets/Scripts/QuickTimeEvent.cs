@@ -9,11 +9,12 @@ public class QuickTimeEvent : MonoBehaviour
 
     public GameObject trigger;
 
+    public bool pause = false;
     public bool booster = false;
 
     public AudioClip boost_clip;
     public AudioClip score_clip;
-
+    
     Rigidbody rb;
 
     public float initScale = 1f;
@@ -36,7 +37,13 @@ public class QuickTimeEvent : MonoBehaviour
             trigger.gameObject.SetActive(false);
             GetComponent<Animator>().enabled = false;
 
-            if (booster)
+            if (pause)
+            {
+                VideoManager.Instance.Speed_Normal();
+                transform.DOScale(0f, .5f).SetEase(Ease.OutBounce);
+                SoundManager.Instance.Play(SoundManager.Type.FX, boost_clip);
+            }
+            else if (booster)
             {
                 VideoManager.Instance.Speed_Up();
                 transform.DOScale(0f, .5f).SetEase(Ease.OutBounce);
