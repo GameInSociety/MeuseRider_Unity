@@ -198,11 +198,13 @@ public class VideoManager : MonoBehaviour
 
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
-        
-        endWayPoint.position = new Vector3((float)videoPlayer.length * defaultFollowerSpeed, 0f, 0f);
+
+        float dur = (float)videoPlayer.length;
+        endWayPoint.position = new Vector3(dur * defaultFollowerSpeed, 0f, 0f);
 
         Debug.Log(endWayPoint.position.x);
-        Debug.Log(videoPlayer.length);
+        Debug.Log("dur double : " + videoPlayer.length);
+        Debug.Log("dur float : " + dur);
 
         if ( levelIndex<  levels.Length-1)
         {
