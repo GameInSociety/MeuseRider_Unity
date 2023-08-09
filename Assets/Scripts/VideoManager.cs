@@ -262,6 +262,11 @@ public class VideoManager : MonoBehaviour
 
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
+        if (levelIndex == levels.Length)
+        {
+            levelIndex = 0;
+        }
+
         LoadVideo();
     }
 
