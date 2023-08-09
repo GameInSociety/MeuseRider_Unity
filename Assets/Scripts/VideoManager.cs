@@ -201,11 +201,15 @@ public class VideoManager : MonoBehaviour
         
         endWayPoint.position = new Vector3((float)videoPlayer.length * defaultFollowerSpeed, 0f, 0f);
 
-        Portal.Instance.gameObject.SetActive(true);
-        Portal.Instance.transform.position = endWayPoint.position + new Vector3(0.8f, 0.75f, 0f);
-        Portal.Instance.SetText(levels[levelIndex + 1].name);
+        Debug.Log(endWayPoint.position.x);
+        Debug.Log(videoPlayer.length);
 
-        Debug.Log("video lenght : " + videoPlayer.length);
+        if ( levelIndex<  levels.Length-1)
+        {
+            Portal.Instance.gameObject.SetActive(true);
+            Portal.Instance.transform.position = endWayPoint.position + new Vector3(0.8f, 0.75f, 0f);
+            Portal.Instance.SetText(levels[levelIndex + 1].name);
+        }
 
         PathFollower.Instance.UpdateMovement();
 
