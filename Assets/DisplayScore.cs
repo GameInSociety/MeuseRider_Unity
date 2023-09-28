@@ -14,7 +14,6 @@ public class DisplayScore : MonoBehaviour
     public float displayDuration = 2f;
     bool displaying = false;
 
-    public int score;
 
     private void Awake()
     {
@@ -25,7 +24,7 @@ public class DisplayScore : MonoBehaviour
     {
         transform.localScale = Vector3.zero;
 
-        uiText.text = score.ToString();
+        uiText.text = DisplayGlobalScore.score.ToString();
 
     }
 
@@ -44,7 +43,7 @@ public class DisplayScore : MonoBehaviour
 
     public void AddScore()
     {
-        score += 50;
+        DisplayGlobalScore.score += 50;
 
         transform.localScale = Vector3.zero;
 
@@ -61,7 +60,7 @@ public class DisplayScore : MonoBehaviour
 
     void AddScoreDelay()
     {
-        uiText.text = score.ToString();
+        uiText.text = DisplayGlobalScore.score.ToString();
 
         Tween.Bounce(transform);
 

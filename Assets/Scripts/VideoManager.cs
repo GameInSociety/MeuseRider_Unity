@@ -49,6 +49,8 @@ public class VideoManager : MonoBehaviour
     
     public float speedUpDuration = 2f;
 
+    public Animator bikeAnimator;
+
 
 
     public Transform endWayPoint;
@@ -64,7 +66,17 @@ public class VideoManager : MonoBehaviour
 
     private void Start()
     {
+        //LoadVideo();
+
+        bikeAnimator.enabled = false;
+    }
+
+    public void StartVideos()
+    {
+        DisplayGlobalScore.score = 0;
         LoadVideo();
+        startGroup.SetActive(false);
+        bikeAnimator.enabled = true;
     }
 
     public void LoadVideo()
@@ -252,6 +264,8 @@ public class VideoManager : MonoBehaviour
         StartCoroutine(NextVideoCoroutine());
     }
 
+    public GameObject startGroup;
+
     IEnumerator NextVideoCoroutine()
     {
         Debug.Log("next video");
@@ -262,12 +276,17 @@ public class VideoManager : MonoBehaviour
 
         yield return new WaitForSeconds(TransitionManager.Instance.dur);
 
-        if (levelIndex == levels.Length)
-        {
+        if (levelIndex == levels.Length) {
             levelIndex = 0;
+            PathFollower.Instance.ResetPos();
+            startGroup.SetActive(true);
+            bikeAnimator.enabled = false;
+        }
+        else
+        {
+            LoadVideo();
         }
 
-        LoadVideo();
     }
 
 }

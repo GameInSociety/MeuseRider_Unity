@@ -11,6 +11,7 @@ public class QuickTimeEvent : MonoBehaviour
 
     public bool pause = false;
     public bool booster = false;
+    public bool startCollectible = false;
 
     public AudioClip boost_clip;
     public AudioClip score_clip;
@@ -73,7 +74,14 @@ public class QuickTimeEvent : MonoBehaviour
 
             Basket.Instance.HideFeedback();
 
-            DisplayScore.Instance.AddScore();
+            if (startCollectible)
+            {
+                VideoManager.Instance.StartVideos();
+            }
+            else
+            {
+                DisplayScore.Instance.AddScore();
+            }
 
             rb.useGravity = true;
             rb.isKinematic = false;

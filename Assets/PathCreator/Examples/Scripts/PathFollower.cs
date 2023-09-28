@@ -33,6 +33,11 @@ namespace PathCreation.Examples
         }
 
 
+        public void ResetPos()
+        {
+            distanceTravelled = 0f;
+        }
+
         public void StartMovement()
         {
             move = true;

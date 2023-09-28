@@ -24,7 +24,7 @@ public class QuickTimeEventTrigger : MonoBehaviour
                 }
 
                 if (audioClip != null)
-                {
+                { 
                     SoundManager.Instance.Play(SoundManager.Type.Voice, audioClip);
                 }
 
