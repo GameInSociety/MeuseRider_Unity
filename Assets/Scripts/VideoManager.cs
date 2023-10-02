@@ -127,6 +127,8 @@ public class VideoManager : MonoBehaviour
 
     public void Speed_Normal()
     {
+        bikeAnimator.enabled = true;
+
         targetPathFollowerSpeed = defaultFollowerSpeed;
         targetPlayBackSpeed = defaultPlayBackSpeed;
     }
