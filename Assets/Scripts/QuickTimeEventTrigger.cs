@@ -20,7 +20,7 @@ public class QuickTimeEventTrigger : MonoBehaviour
             {
                 if ( pauseOnPause)
                 {
-                    VideoManager.Instance.Stop();
+                    //VideoManager.Instance.Stop();
                 }
 
                 if (audioClip != null)
