@@ -74,6 +74,8 @@ public class QuickTimeEvent : MonoBehaviour
 
             Basket.Instance.HideFeedback();
 
+            GetComponent<BoxCollider>().isTrigger = false;
+
             if (startCollectible)
             {
                 VideoManager.Instance.StartVideos();
@@ -82,12 +84,12 @@ public class QuickTimeEvent : MonoBehaviour
             {
                 DisplayScore.Instance.AddScore();
             }
-
-            rb.useGravity = true;
-            rb.isKinematic = false;
-
+            
             transform.SetParent(other.transform);
-            transform.SetParent(null);
+
+            Vector3 p = transform.position;
+            p.y = 0.55f;
+            transform.DOMove(p, 0.2f);
 
             //transform.DOScale(0f, 0.5f).SetEase(Ease.InBounce);
 
