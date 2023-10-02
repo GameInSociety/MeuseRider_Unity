@@ -149,6 +149,8 @@ public class VideoManager : MonoBehaviour
 
         targetPathFollowerSpeed = 0f;
         targetPlayBackSpeed = 0f;
+
+        bikeAnimator.enabled = false;
     }
 
     private IEnumerator LoadVideoCoroutine()
