@@ -62,10 +62,9 @@ public class QuickTimeEvent : MonoBehaviour
                 SoundManager.Instance.Play(SoundManager.Type.FX, score_clip);
             }
 
-
         }
 
-        if ( other.tag == "Basket" && !booster)
+        if ( other.tag == "Basket" && !booster && caught)
         {
             if (inBasked)
                 return;
@@ -82,6 +81,7 @@ public class QuickTimeEvent : MonoBehaviour
             }
             else
             {
+                Debug.Log("add score");
                 DisplayScore.Instance.AddScore();
             }
             
@@ -90,9 +90,6 @@ public class QuickTimeEvent : MonoBehaviour
             Vector3 p = transform.position;
             p.y = 0.55f;
             transform.DOMove(p, 0.2f);
-
-            //transform.DOScale(0f, 0.5f).SetEase(Ease.InBounce);
-
         }
     }
 

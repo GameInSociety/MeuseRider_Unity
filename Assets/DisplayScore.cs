@@ -43,11 +43,10 @@ public class DisplayScore : MonoBehaviour
 
     public void AddScore()
     {
+        Debug.Log("score");
         DisplayGlobalScore.score += 50;
 
         transform.localScale = Vector3.zero;
-
-
 
         CancelInvoke("AddScoreDelay");
         Invoke("AddScoreDelay", 1.5f);
