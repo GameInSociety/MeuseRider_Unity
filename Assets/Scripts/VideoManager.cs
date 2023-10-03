@@ -58,10 +58,18 @@ public class VideoManager : MonoBehaviour
     bool changeSpeed = false;
 
     public bool playingVideo = false;
+    public bool lockFPS = false;
 
     private void Awake()
     {
         Instance= this;
+
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+
+        if (lockFPS)
+        {
+            Application.targetFrameRate = 60;
+        }
     }
 
     private void Start()

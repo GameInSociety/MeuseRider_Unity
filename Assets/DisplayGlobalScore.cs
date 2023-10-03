@@ -29,9 +29,15 @@ public class DisplayGlobalScore : MonoBehaviour
 
     }
 
+    float deltaTime;
     private void Update()
     {
         uiText_HighScore.text = "" + highScore;
-        uiText_Score.text = "" + score;
+
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        float fps = 1.0f / deltaTime;
+        //uiText_Score.text = "" + score;
+
+        uiText_Score.text = "" + fps;
     }
 }
