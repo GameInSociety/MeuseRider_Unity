@@ -37,7 +37,7 @@ public class QuickTimeEventTrigger : MonoBehaviour
             }
             else
             {
-                VideoManager.Instance.Speed_Down();
+                //VideoManager.Instance.Speed_Down();
             }
         }
     }

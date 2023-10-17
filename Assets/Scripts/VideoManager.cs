@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -51,25 +52,17 @@ public class VideoManager : MonoBehaviour
 
     public Animator bikeAnimator;
 
-
-
     public Transform endWayPoint;
 
     bool changeSpeed = false;
 
     public bool playingVideo = false;
-    public bool lockFPS = false;
 
     private void Awake()
     {
         Instance= this;
 
         QualitySettings.vSyncCount = 0;  // VSync must be disabled
-
-        if (lockFPS)
-        {
-            Application.targetFrameRate = 60;
-        }
     }
 
     private void Start()
@@ -81,7 +74,6 @@ public class VideoManager : MonoBehaviour
 
     public void StartVideos()
     {
-        DisplayGlobalScore.score = 0;
         LoadVideo();
         startGroup.SetActive(false);
         bikeAnimator.enabled = true;
@@ -230,13 +222,6 @@ public class VideoManager : MonoBehaviour
         Debug.Log("dur double : " + videoPlayer.length);
         Debug.Log("dur float : " + dur);
 
-        if ( levelIndex<  levels.Length-1)
-        {
-            Portal.Instance.gameObject.SetActive(true);
-            Portal.Instance.transform.position = endWayPoint.position + new Vector3(0.8f, 0.75f, 0f);
-            Portal.Instance.SetText(levels[levelIndex + 1].name);
-        }
-
         PathFollower.Instance.UpdateMovement();
 
         TransitionManager.Instance.FadeOut();
@@ -262,13 +247,7 @@ public class VideoManager : MonoBehaviour
         playingVideo = false;
 
         PathFollower.Instance.move = false;
-
-        if (!debug_enablePortals)
-        {
-            Portal.Instance.Trigger();
-        }
-
-
+        NextVideo();
     }
 
     public void NextVideo()
@@ -291,8 +270,12 @@ public class VideoManager : MonoBehaviour
         if (levelIndex == levels.Length) {
             levelIndex = 0;
             PathFollower.Instance.ResetPos();
-            startGroup.SetActive(true);
+            //startGroup.SetActive(true);
             bikeAnimator.enabled = false;
+
+            yield return new WaitForSeconds(2f);
+            SceneManager.LoadScene(0);
+
         }
         else
         {

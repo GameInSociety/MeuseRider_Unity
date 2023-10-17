@@ -1,4 +1,5 @@
 using DG.Tweening;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,17 +15,14 @@ public class DisplayScore : MonoBehaviour
     public float displayDuration = 2f;
     bool displaying = false;
 
-
     private void Awake()
     {
         Instance = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         transform.localScale = Vector3.zero;
-
-        uiText.text = DisplayGlobalScore.score.ToString();
 
     }
 
@@ -41,25 +39,20 @@ public class DisplayScore : MonoBehaviour
         }
     }
 
-    public void AddScore()
+    public void Display()
     {
-        Debug.Log("score");
-        DisplayGlobalScore.score += 50;
-
         transform.localScale = Vector3.zero;
+        uiText.text = DisplayGlobalScore.Instance.score.total.ToString();
 
         CancelInvoke("AddScoreDelay");
         Invoke("AddScoreDelay", 1.5f);
 
         transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
-
-        
-
     }
 
     void AddScoreDelay()
     {
-        uiText.text = DisplayGlobalScore.score.ToString();
+        uiText.text = DisplayGlobalScore.Instance.score.total.ToString();
 
         Tween.Bounce(transform);
 

@@ -16,18 +16,12 @@ public class QuickTimeEvent : MonoBehaviour
     public AudioClip boost_clip;
     public AudioClip score_clip;
     
-    Rigidbody rb;
-
     public float initScale = 1f;
+    public int type;
 
     bool inBasked = false;
 
     bool caught = false;
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -81,8 +75,9 @@ public class QuickTimeEvent : MonoBehaviour
             }
             else
             {
-                Debug.Log("add score");
-                DisplayScore.Instance.AddScore();
+                Renderer rend = GetComponentInChildren<Renderer>(true);
+                DisplayGlobalScore.Instance.score.Add(type);
+                DisplayScore.Instance.Display();
             }
             
             transform.SetParent(other.transform);
