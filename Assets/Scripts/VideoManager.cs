@@ -159,8 +159,6 @@ public class VideoManager : MonoBehaviour
     {
         TransitionManager.Instance.image.color = Color.black;
 
-        Debug.Log(Application.persistentDataPath);
-
         Application.runInBackground = true;
 
         var videoPlayer = GetComponent<VideoPlayer>();
@@ -202,51 +200,31 @@ public class VideoManager : MonoBehaviour
         while (!videoPlayer.isPrepared)
             yield return null;
 
-        Stop();
-
         SoundManager.Instance.Play(SoundManager.Type.Ambiant, levels[levelIndex].ambiance_clip);
 
         videoPlayer.Play();
-        videoPlayer.Pause();
+        audioSource.Play();
         videoPlayer.time = 0f;
-        videoPlayer.playbackSpeed = 0f;
         videoPlayer.targetTexture = _renderTexture;
-
-        yield return new WaitForSeconds(TransitionManager.Instance.dur);
-
+        playingVideo = true;
+        video_timer = 0f;
+        Speed_Normal();
+        PathFollower.Instance.StartMovement();
 
         float dur = (float)videoPlayer.length;
         endWayPoint.position = new Vector3(dur * defaultFollowerSpeed, 0f, 0f);
 
-        Debug.Log(endWayPoint.position.x);
-        Debug.Log("dur double : " + videoPlayer.length);
-        Debug.Log("dur float : " + dur);
-
         PathFollower.Instance.UpdateMovement();
-
         TransitionManager.Instance.FadeOut();
-        yield return new WaitForSeconds(TransitionManager.Instance.dur);
-
-        Speed_Normal();
-        video_timer = 0f;
-        playingVideo = true;
-        PathFollower.Instance.StartMovement();
-
-        videoPlayer.Play();
-        audioSource.Play();
 
         yield return new WaitForSeconds(2f);
 
         SoundManager.Instance.Play(SoundManager.Type.Voice, levels[levelIndex].voice_clip);
 
-        while (videoPlayer.isPlaying)
-            yield return null;
+        yield return new WaitForSeconds((float)videoPlayer.length-4f);
 
         Debug.Log("[VIDEO ENDED]");
 
-        playingVideo = false;
-
-        PathFollower.Instance.move = false;
         NextVideo();
     }
 
@@ -272,6 +250,8 @@ public class VideoManager : MonoBehaviour
             PathFollower.Instance.ResetPos();
             //startGroup.SetActive(true);
             bikeAnimator.enabled = false;
+            Stop();
+            DisplayGlobalScore.Instance.score.Save();
 
             yield return new WaitForSeconds(2f);
             SceneManager.LoadScene(0);

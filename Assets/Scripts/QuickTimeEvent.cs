@@ -42,7 +42,8 @@ public class QuickTimeEvent : MonoBehaviour
             {
                 VideoManager.Instance.Speed_Up();
                 transform.DOScale(0f, .5f).SetEase(Ease.OutBounce);
-                
+                DisplayGlobalScore.Instance.score.Add(4);
+
                 SoundManager.Instance.Play(SoundManager.Type.FX, boost_clip);
             }
             else

@@ -19,7 +19,6 @@ public class DisplayGlobalScore : MonoBehaviour {
     private void Awake()
     {
         Instance = this;
-        score.Load();
         UpdateUI();
     }
 
@@ -29,6 +28,8 @@ public class DisplayGlobalScore : MonoBehaviour {
     }
 
     public void UpdateUI() {
+        score.Load();
+
         uiText_HighScore.text = "" + PlayerPrefs.GetInt("highscore", 0);
         uiText_Score.text = "" + score.total;
 

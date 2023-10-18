@@ -61,6 +61,7 @@ public class Score
         PlayerPrefs.SetInt("dragees", dragees);
         PlayerPrefs.SetInt("mirabelles", mirabelles);
         PlayerPrefs.SetInt("boosts", boosts);
+
     }
 
     public void Load()
