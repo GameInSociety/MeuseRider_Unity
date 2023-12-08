@@ -16,6 +16,7 @@ public class VideoManager : MonoBehaviour
     private RenderTexture _renderTexture = null;
 
     public Text uiText_Debug;
+    public GameObject startGroup;
 
     public Level[] levels;
     [System.Serializable]
@@ -33,8 +34,8 @@ public class VideoManager : MonoBehaviour
 
     float currentPlayBackSpeed = 0.5f;
     float currentPathFollowerSpeed = 5;
-    public float targetPlayBackSpeed = 0.5f;
-    public float targetPathFollowerSpeed = 5f;
+    private float targetPlayBackSpeed = 0.5f;
+    private float targetPathFollowerSpeed = 5f;
 
     public float defaultPlayBackSpeed = 1f;
     public float defaultFollowerSpeed = 5f;
@@ -56,6 +57,8 @@ public class VideoManager : MonoBehaviour
 
     bool changeSpeed = false;
 
+    VideoPlayer videoPlayer;
+
     public bool playingVideo = false;
 
     private void Awake()
@@ -63,25 +66,49 @@ public class VideoManager : MonoBehaviour
         Instance= this;
 
         QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 72;
     }
 
     private void Start()
     {
-        //LoadVideo();
-
+        InitVideoPlayer();
         bikeAnimator.enabled = false;
+    }
+
+    void InitVideoPlayer() {
+        Application.runInBackground = true;
+
+        videoPlayer = GetComponent<VideoPlayer>();
+        videoPlayer.errorReceived += delegate (VideoPlayer videoPlayer, string message) {
+            uiText_Debug.text = message;
+            Debug.LogWarning("[VideoPlayer] Play Movie Error: " + message);
+        };
+
+        videoPlayer.playOnAwake = false;
+
+        videoPlayer.source = VideoSource.VideoClip;
+        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+        videoPlayer.targetTexture = _renderTexture;
+
+        StartCoroutine(StartFirstVideo());
+    }
+
+    IEnumerator StartFirstVideo() {
+        yield return LoadVideo(levelIndex);
+        Debug.Log($"first video loaded");
+        TransitionManager.Instance.FadeOut();
     }
 
     public void StartVideos()
     {
-        LoadVideo();
+        StartLevel(levelIndex);
         startGroup.SetActive(false);
         bikeAnimator.enabled = true;
     }
 
-    public void LoadVideo()
+    public void StartLevel(int index)
     {
-        StartCoroutine(LoadVideoCoroutine());
+        StartCoroutine(StartLevelCoroutine(index));
     }
 
     private void Update()
@@ -155,57 +182,39 @@ public class VideoManager : MonoBehaviour
         bikeAnimator.enabled = false;
     }
 
-    private IEnumerator LoadVideoCoroutine()
+    private IEnumerator LoadVideo(int index) {
+        string url = Application.persistentDataPath + "/" + levels[index].name + ".mp4";
+        videoPlayer.url = url;
+        Debug.Log(url);
+        levels[index].ld_Obj.SetActive(true);
+        videoPlayer.Prepare();
+
+        while (!videoPlayer.isPrepared)
+            yield return null;
+
+        videoPlayer.Play();
+        videoPlayer.playbackSpeed = 0f;
+    }
+
+    private IEnumerator StartLevelCoroutine(int index)
     {
-        TransitionManager.Instance.image.color = Color.black;
-
-        Application.runInBackground = true;
-
-        var videoPlayer = GetComponent<VideoPlayer>();
-        var audioSource = GetComponent<AudioSource>();
-
-        videoPlayer.errorReceived += delegate (VideoPlayer videoPlayer, string message)
-        {
-            uiText_Debug.text = message;
-            Debug.LogWarning("[VideoPlayer] Play Movie Error: " + message);
-        };
-
-        videoPlayer.playOnAwake = false;
-        audioSource.playOnAwake = false;
-
         videoPlayer.playbackSpeed = currentPlayBackSpeed;
         PathFollower.Instance.speed = currentPathFollowerSpeed;
-
-        videoPlayer.source = VideoSource.VideoClip;
-        videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
-        videoPlayer.EnableAudioTrack(0, true);
-        videoPlayer.SetTargetAudioSource(0, audioSource);
 
         // load level
         foreach (var item in levels)
         {
             if (item.ld_Obj == null)
                 continue;
-
             item.ld_Obj.SetActive(false);
         }
 
-        string url = Application.persistentDataPath + "/" + levels[levelIndex].name + ".mp4";
-        videoPlayer.url = url;
+        yield return LoadVideo(index);
 
-        levels[levelIndex].ld_Obj.SetActive(true);
-        videoPlayer.Prepare();
-
-        while (!videoPlayer.isPrepared)
-            yield return null;
-
-        SoundManager.Instance.Play(SoundManager.Type.Ambiant, levels[levelIndex].ambiance_clip);
+        SoundManager.Instance.Play(SoundManager.Type.Ambiant, levels[index].ambiance_clip);
 
         videoPlayer.Play();
-        audioSource.Play();
         videoPlayer.time = 0f;
-        videoPlayer.targetTexture = _renderTexture;
         playingVideo = true;
         video_timer = 0f;
         Speed_Normal();
@@ -219,9 +228,11 @@ public class VideoManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        SoundManager.Instance.Play(SoundManager.Type.Voice, levels[levelIndex].voice_clip);
 
-        yield return new WaitForSeconds((float)videoPlayer.length-4f);
+        //yield return new WaitForSeconds((float)videoPlayer.length-4f);
+        while (videoPlayer.isPlaying) {
+            yield return null;
+        }
 
         Debug.Log("[VIDEO ENDED]");
 
@@ -233,7 +244,6 @@ public class VideoManager : MonoBehaviour
         StartCoroutine(NextVideoCoroutine());
     }
 
-    public GameObject startGroup;
 
     IEnumerator NextVideoCoroutine()
     {
@@ -259,7 +269,7 @@ public class VideoManager : MonoBehaviour
         }
         else
         {
-            LoadVideo();
+            StartLevel(levelIndex);
         }
 
     }

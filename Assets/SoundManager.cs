@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
 
     public void Play(Type type, AudioClip clip)
     {
+        Debug.Log("play sound "+type + "clip : " + clip.name );
         sources[(int)type].clip = clip;
         sources[(int)type].Play();
     }

@@ -33,10 +33,10 @@ public class DisplayGlobalScore : MonoBehaviour {
         uiText_HighScore.text = "" + PlayerPrefs.GetInt("highscore", 0);
         uiText_Score.text = "" + score.total;
 
-        uiText_Mirabelles.text = "x " + score.mirabelles.ToString();
-        uiText_Bries.text = "x " + score.bries.ToString();
-        uiText_Madeleines.text = "x " + score.madeleines.ToString();
-        uiText_Dragees.text = "x " + score.dragees.ToString();
-        uiText_Boosts.text = "x " + score.boosts.ToString();
+        uiText_Mirabelles.text = $"{score.mirabelles} mirabelles";
+        uiText_Bries.text = $"{score.bries} bries";
+        uiText_Madeleines.text = $"{score.madeleines} madeleines";
+        uiText_Dragees.text = $"{score.mirabelles} dragées";
+        uiText_Boosts.text = score.boosts.ToString();
     }
 }
