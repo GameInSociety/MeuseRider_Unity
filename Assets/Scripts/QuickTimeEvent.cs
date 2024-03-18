@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Animations;
 
 public class QuickTimeEvent : MonoBehaviour
 {
@@ -22,6 +23,19 @@ public class QuickTimeEvent : MonoBehaviour
     bool inBasked = false;
 
     bool caught = false;
+
+    bool appeared = false;
+
+    private void Start() {
+
+        initScale = body.localScale.x;
+        body.localScale = Vector3.zero;
+    }
+
+    public void Appear() {
+        if(appeared) { return; }
+        body.DOScale(initScale, 0.2f).SetEase(Ease.OutBounce);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -50,7 +64,7 @@ public class QuickTimeEvent : MonoBehaviour
             {
                 transform.SetParent(other.transform);
                 Basket.Instance.ShowFeedback();
-                transform.DOScale(initScale, .2f).SetEase(Ease.OutBounce);
+                transform.DOScale(1f, .2f).SetEase(Ease.OutBounce);
                 transform.DOLocalMove(new Vector3(-0.0352f, 0.0055f, 0.0349f), 0.2f);
                 transform.DOLocalRotate(new Vector3(0, -98f, 70.507f), 0.2f);
 

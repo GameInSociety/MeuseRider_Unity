@@ -12,6 +12,7 @@ public class QuickTimeEventTrigger : MonoBehaviour
     public AudioClip audioClip;
     public string text;
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Controller")
