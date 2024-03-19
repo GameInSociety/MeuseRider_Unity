@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Animations;
+using UnityEngine.Rendering;
 
 public class QuickTimeEvent : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class QuickTimeEvent : MonoBehaviour
 
         initScale = body.localScale.x;
         body.localScale = Vector3.zero;
+        /*if (!startCollectible) {
+            var v = transform.localPosition;
+            float x = Random.value > 0.5f ? Random.Range(0.4f, 0.7f) : -Random.Range(0.4f, 0.7f);
+            v.x = x;
+            transform.localPosition = v;
+        }*/
     }
 
     public void Appear() {
@@ -43,8 +50,12 @@ public class QuickTimeEvent : MonoBehaviour
         {
             caught= true;
 
-            trigger.gameObject.SetActive(false);
-            GetComponent<Animator>().enabled = false;
+            if ( trigger != null )
+                trigger.gameObject.SetActive(false);
+
+            var anim = GetComponentInChildren<Animator>();
+            if ( anim != null )
+                anim.enabled = false;
 
             if (pause)
             {

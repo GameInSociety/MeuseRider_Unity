@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1840672048}
   - component: {fileID: 1840672049}
   m_Layer: 0
-  m_Name: Player Trigger
+  m_Name: Explication Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 6681554710367258998}
   - component: {fileID: 395886257187189242}
   - component: {fileID: 2142197896369008769}
-  - component: {fileID: 8304431595706356791}
   m_Layer: 0
   m_Name: Controller Trigger
   m_TagString: Untagged
@@ -132,6 +131,7 @@ MonoBehaviour:
   boost_clip: {fileID: 8300000, guid: 34bf41940fc46f143b6026725c7c1d5c, type: 3}
   score_clip: {fileID: 8300000, guid: c4bc95943b7307c44ac38aefa6c080df, type: 3}
   initScale: 1
+  type: 0
 --- !u!54 &2142197896369008769
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -148,26 +148,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &8304431595706356791
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4235968060765463662}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: da400203adf36cd42ba0d4b973c5e629, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5111430398011442201
 GameObject:
   m_ObjectHideFlags: 0

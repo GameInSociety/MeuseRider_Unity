@@ -45,6 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ad16496e4d03141ba6d457505d35a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pause: 0
+  pauseOnPause: 0
+  objectToActivate: {fileID: 0}
+  audioClip: {fileID: 0}
+  text: 
 --- !u!65 &1840672049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101,7 +106,6 @@ GameObject:
   - component: {fileID: 7099569806390014169}
   - component: {fileID: 6681554710367258998}
   - component: {fileID: 395886257187189242}
-  - component: {fileID: 2484946388519925719}
   - component: {fileID: 2142197896369008769}
   m_Layer: 0
   m_Name: Controller Trigger
@@ -153,30 +157,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 2336656968344765474}
   trigger: {fileID: 1840672046}
+  pause: 0
   booster: 0
+  startCollectible: 0
   boost_clip: {fileID: 8300000, guid: 34bf41940fc46f143b6026725c7c1d5c, type: 3}
   score_clip: {fileID: 8300000, guid: c4bc95943b7307c44ac38aefa6c080df, type: 3}
   initScale: 1
---- !u!95 &2484946388519925719
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4235968060765463662}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2dcc50dae729f504688f95de70915cbe, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  type: 0
 --- !u!54 &2142197896369008769
 Rigidbody:
   m_ObjectHideFlags: 0
